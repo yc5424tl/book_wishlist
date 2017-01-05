@@ -74,7 +74,6 @@ def add_book(book):
 
     book.id = generate_id()
     book_list.append(book)
-    return book
 
 
 def generate_id():
