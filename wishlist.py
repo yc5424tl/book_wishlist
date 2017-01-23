@@ -1,7 +1,6 @@
-#Main program
+# Main program
 
-import ui, datastore
-from book import Book
+import ui, datastore, fileIO
 
 
 def handle_choice(choice):
@@ -17,6 +16,9 @@ def handle_choice(choice):
 
     elif choice == '4':
         new_book()
+
+    elif choice == '5':
+        search()
 
     elif choice == 'q':
         quit()
@@ -53,15 +55,29 @@ def new_book():
     ui.message('Book added: ' + str(new_book))
 
 
+def search():
+    search_results = []
+    search_term = input("Please enter a title or author keyword: ")
+    all_books = datastore.get_books()
+    for book in all_books:
+        if search_term in book.title:
+            search_results.append(book)
+        elif search_term in book.author:
+            search_results.append(book)
+
+    print("Here's what I found:")
+    ui.show_list(search_results)
+
+
 def quit():
     '''Perform shutdown tasks'''
-    datastore.shutdown()
+    fileIO.shutdown()
     ui.message('Bye!')
 
 
 def main():
 
-    datastore.setup()
+    fileIO.setup()
 
     quit = 'q'
     choice = None
