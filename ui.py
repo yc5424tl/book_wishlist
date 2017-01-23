@@ -11,6 +11,7 @@ def display_menu_get_choice():
         3. Mark a book as read
         4. Add book to wishlist
         5. Search for a book
+        6. Edit a title or author
         q. Quit
     ''')
 
@@ -64,3 +65,19 @@ def message(msg):
 def get_search_term():
     search_term = input("Please enter a title or author keyword: ")
     return search_term
+
+
+def ask_what_to_edit():
+    response = input("Do you wish to edit the Author or Title? Enter 1 for Author or 2 for Title: ")
+    while response != "1" and response != "2":
+        response = input("That wasn't a 1 or 2, please try again.\nDo you wish to edit the Author or Title? Enter 1 for Author or 2 for Title: ")
+    if response == "1":
+        response = "author"
+    elif response == "2":
+        response = "title"
+    return response
+
+
+def get_new_value():
+    new_value = input("What is the new value? ")
+    return new_value
