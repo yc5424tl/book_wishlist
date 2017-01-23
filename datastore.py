@@ -1,17 +1,12 @@
-
-import os
 from book import Book
 import json #Save the book data as JSON
             #(instead of strings joined with a separator)
-
-DATA_DIR = 'data'
-BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
-COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
 
 separator = '^^^'  # a string probably not in any valid data relating to a book
 
 book_list = []
 counter = 0
+
 
 def setup():
     ''' Read book info from file, if file exists. '''
@@ -50,12 +45,13 @@ def shutdown():
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        #f.write(output_data)
+        f.write(output_data)
         json.dumps(output_data)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
-        #f.write(str(counter))
+        f.write(str(counter))
         json.dumps(str(counter))
+
 
 
 def get_books(**kwargs):
@@ -69,7 +65,6 @@ def get_books(**kwargs):
     if 'read' in kwargs:
         read_books = [ book for book in book_list if book.read == kwargs['read'] ]
         return read_books
-
 
 
 def add_book(book):
@@ -98,8 +93,7 @@ def set_read(book_id, read):
             book.read = True
             return True
 
-    return False # return False if book id is not found
-
+    return False  # return False if book id is not found
 
 
 def make_book_list(string_from_file):
