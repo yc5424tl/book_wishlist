@@ -109,12 +109,15 @@ def make_book_list(string_from_file):
 
     books_str = string_from_file.split('\n')
 
-    for book_str in books_str:
-        data = book_str.split(separator)
-        book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
-        book_list.append(book)
-        json.dumps(book) # Changes the format to json
-
+    #Add an exception handling to this lines of code
+    try:
+        for book_str in books_str:
+            data = book_str.split(separator)
+            book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
+            book_list.append(book)
+            json.dumps(book) # Changes the format to json
+    except Exception as e:
+        print('out of range', e)
 
 def make_output_data():
     ''' create a string containing all data on books, for writing to output file'''
