@@ -1,6 +1,8 @@
 import os
 import datastore
 
+import json  #store files in json format
+
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
 COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
@@ -42,7 +44,9 @@ def shutdown():
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        f.write(output_data)
+        #f.write(output_data)
+        json.dumps(output_data) # Saves data in json format
 
     with open(COUNTER_FILE_NAME, 'w') as f:
         f.write(str(counter))
+        #json.dumps(counter)
