@@ -59,3 +59,8 @@ def get_new_book_info():
 def message(msg):
     '''Display a message to the user'''
     print(msg)
+
+
+def get_search_term():
+    search_term = input("Please enter a title or author keyword: ")
+    return search_term

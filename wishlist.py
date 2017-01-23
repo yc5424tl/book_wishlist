@@ -42,6 +42,7 @@ def show_read():
 def book_read():
     ''' Get choice from user, edit datastore, display success/error'''
     book_id = ui.ask_for_book_id()
+
     if datastore.set_read(book_id, True):
         ui.message('Successfully updated')
     else:
@@ -57,8 +58,8 @@ def new_book():
 
 def search():
     search_results = []
-    search_term = input("Please enter a title or author keyword: ")
     all_books = datastore.get_books()
+    search_term = ui.get_search_term()
     for book in all_books:
         if search_term in book.title:
             search_results.append(book)
