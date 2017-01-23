@@ -108,6 +108,8 @@ def make_book_list(string_from_file):
     global book_list
 
     books_str = string_from_file.split('\n')
+
+    #Add an exception handling to this lines of code
     try:
         for book_str in books_str:
             data = book_str.split(separator)
