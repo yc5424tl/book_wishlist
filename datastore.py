@@ -1,6 +1,8 @@
 
 import os
 from book import Book
+import json #Save the book data as JSON
+            #(instead of strings joined with a separator)
 
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
@@ -18,7 +20,8 @@ def setup():
 
     try :
         with open(BOOKS_FILE_NAME) as f:
-            data = f.read()
+            #data = f.read()
+            data = json.loads(f)
             make_book_list(data)
     except FileNotFoundError:
         # First time program has run. Assume no books.
@@ -44,13 +47,15 @@ def shutdown():
     try:
         os.mkdir(DATA_DIR)
     except FileExistsError:
-        pass # Ignore - if directory exists, don't need to do anything. 
+        pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        f.write(output_data)
+        #f.write(output_data)
+        json.dumps(output_data)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
-        f.write(str(counter))
+        #f.write(str(counter))
+        json.dumps(str(counter))
 
 
 def get_books(**kwargs):
@@ -108,6 +113,7 @@ def make_book_list(string_from_file):
         data = book_str.split(separator)
         book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
         book_list.append(book)
+        json.dumps(book)
 
 
 def make_output_data():
@@ -119,9 +125,12 @@ def make_output_data():
 
     for book in book_list:
         output = [ book.title, book.author, str(book.read), str(book.id) ]
-        output_str = separator.join(output)
-        output_data.append(output_str)
+        #output_str = separator.join(output)
+        #output_data.append(output_str)
+        output_data.append(output)
+        json_str = json.dumps(output)
 
-    all_books_string = '\n'.join(output_data)
+    #all_books_string = '\n'.join(output_data)
+    all_books_string = json.loads(json_str)
 
     return all_books_string
