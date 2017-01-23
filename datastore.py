@@ -1,12 +1,17 @@
+
+import os
 from book import Book
 import json #Save the book data as JSON
             #(instead of strings joined with a separator)
+
+DATA_DIR = 'data'
+BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
+COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
 
 separator = '^^^'  # a string probably not in any valid data relating to a book
 
 book_list = []
 counter = 0
-
 
 def setup():
     ''' Read book info from file, if file exists. '''
@@ -16,7 +21,7 @@ def setup():
     try :
         with open(BOOKS_FILE_NAME) as f:
             #data = f.read()
-            data = json.loads(f)
+            data = json.loads(f) #reads the json formant into python
             make_book_list(data)
     except FileNotFoundError:
         # First time program has run. Assume no books.
@@ -46,12 +51,11 @@ def shutdown():
 
     with open(BOOKS_FILE_NAME, 'w') as f:
         f.write(output_data)
-        json.dumps(output_data)
+        json.dumps(output_data) # Writes the new book to a json formated file
 
     with open(COUNTER_FILE_NAME, 'w') as f:
-        f.write(str(counter))
+        #f.write(str(counter))
         json.dumps(str(counter))
-
 
 
 def get_books(**kwargs):
@@ -65,6 +69,7 @@ def get_books(**kwargs):
     if 'read' in kwargs:
         read_books = [ book for book in book_list if book.read == kwargs['read'] ]
         return read_books
+
 
 
 def add_book(book):
@@ -93,7 +98,8 @@ def set_read(book_id, read):
             book.read = True
             return True
 
-    return False  # return False if book id is not found
+    return False # return False if book id is not found
+
 
 
 def make_book_list(string_from_file):
@@ -107,7 +113,7 @@ def make_book_list(string_from_file):
         data = book_str.split(separator)
         book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
         book_list.append(book)
-        json.dumps(book)
+        json.dumps(book) # Changes the format to json
 
 
 def make_output_data():
@@ -117,14 +123,15 @@ def make_output_data():
 
     output_data = []
 
+
     for book in book_list:
         output = [ book.title, book.author, str(book.read), str(book.id) ]
         #output_str = separator.join(output)
         #output_data.append(output_str)
         output_data.append(output)
-        json_str = json.dumps(output)
+        json_str = json.dumps(output) # This outputs the data in json format
 
     #all_books_string = '\n'.join(output_data)
-    all_books_string = json.loads(json_str)
+    all_books_string = json.loads(json_str) #json format string
 
     return all_books_string
