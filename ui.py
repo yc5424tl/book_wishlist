@@ -96,6 +96,12 @@ def ask_what_to_edit():
     return response
 
 
+# Added date read as user input so user can format any way they like, eg. 'June 2011' or 'Summer 2012'
+def get_date_read():
+    date = input("When did you finish this book?")
+    return date
+
+
 def get_new_value():
     new_value = input("What is the new value? ")
     return new_value

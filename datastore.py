@@ -86,7 +86,7 @@ def generate_id():
     return counter
 
 
-def set_read(book_id, read):
+def set_read(book_id, date_read):
     '''Update book with given book_id to read. Return True if book is found in DB and update is made, False otherwise.'''
 
     global book_list
@@ -95,6 +95,7 @@ def set_read(book_id, read):
 
         if book.id == book_id:
             book.read = True
+            book.date_read = date_read
             return True
 
     return False # return False if book id is not found
@@ -110,7 +111,7 @@ def make_book_list(string_from_file):
     try:
         for book_str in books_str:
             data = book_str.split(separator)
-            book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
+            book = Book(data[0], data[1], data[2] == 'True', int(data[3]), data[4])
             book_list.append(book)
             # json.dumps(book)
     except Exception as e:
@@ -125,7 +126,7 @@ def make_output_data():
     output_data = []
 
     for book in book_list:
-        output = [ book.title, book.author, str(book.read), str(book.id) ]
+        output = [ book.title, book.author, str(book.read), str(book.id), str(book.date_read)]
         output_str = separator.join(output)
         output_data.append(output_str)
         # output_data.append(output)
