@@ -59,8 +59,9 @@ def book_read():
 def new_book():
     '''Get info from user, add new book'''
     new_book = ui.get_new_book_info()
-    datastore.add_book(new_book)
-    ui.message('Book added: ' + str(new_book))
+    if new_book != "null":
+        datastore.add_book(new_book)
+        ui.message('Book added: ' + str(new_book))
 
 
 def search():
@@ -102,6 +103,18 @@ def delete():
         if book.id == id:
             datastore.book_list.remove(book)
             print("Successfully deleted.")
+
+
+def check_book_in_system(title, author):
+    for book in datastore.book_list:
+        if book.author == author and book.title == title and book.read is True:
+            return "read"
+        elif book.author == author and book.title == title and book.read is False:
+            return "unread"
+        elif book.author != author or book.title != title:
+            return False
+    if len(datastore.book_list) == 0:
+        return False
 
 
 def quit():

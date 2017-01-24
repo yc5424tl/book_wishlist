@@ -1,4 +1,3 @@
-
 import os
 from book import Book
 import json #Save the book data as JSON
@@ -12,6 +11,7 @@ separator = '^^^'  # a string probably not in any valid data relating to a book
 
 book_list = []
 counter = 0
+
 
 def setup():
     ''' Read book info from file, if file exists. '''
@@ -71,7 +71,6 @@ def get_books(**kwargs):
         return read_books
 
 
-
 def add_book(book):
     ''' Add to db, set id value, return Book'''
 
@@ -99,7 +98,6 @@ def set_read(book_id, read):
             return True
 
     return False # return False if book id is not found
-
 
 
 def make_book_list(string_from_file):
