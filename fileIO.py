@@ -44,8 +44,8 @@ def shutdown():
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        #f.write(output_data)
-        json.dumps(output_data) # Saves data in json format
+        f.write(output_data)
+        # json.dumps(output_data) # Saves data in json format
 
     with open(COUNTER_FILE_NAME, 'w') as f:
         f.write(str(counter))

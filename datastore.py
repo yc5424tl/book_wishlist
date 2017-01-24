@@ -20,8 +20,8 @@ def setup():
 
     try :
         with open(BOOKS_FILE_NAME) as f:
-            #data = f.read()
-            data = json.loads(f) #reads the json formant into python
+            data = f.read()
+            # data = json.loads(f)
             make_book_list(data)
     except FileNotFoundError:
         # First time program has run. Assume no books.
@@ -51,11 +51,11 @@ def shutdown():
 
     with open(BOOKS_FILE_NAME, 'w') as f:
         f.write(output_data)
-        json.dumps(output_data) # Writes the new book to a json formated file
+        # json.dumps(output_data)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
-        #f.write(str(counter))
-        json.dumps(str(counter))
+        f.write(str(counter))
+        # json.dumps(str(counter))
 
 
 def get_books(**kwargs):
@@ -109,15 +109,15 @@ def make_book_list(string_from_file):
 
     books_str = string_from_file.split('\n')
 
-    #Add an exception handling to this lines of code
     try:
         for book_str in books_str:
             data = book_str.split(separator)
             book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
             book_list.append(book)
-            json.dumps(book) # Changes the format to json
+            # json.dumps(book)
     except Exception as e:
-        print('out of range', e)
+        print("out of index", e)
+
 
 def make_output_data():
     ''' create a string containing all data on books, for writing to output file'''
@@ -126,15 +126,14 @@ def make_output_data():
 
     output_data = []
 
-
     for book in book_list:
         output = [ book.title, book.author, str(book.read), str(book.id) ]
-        #output_str = separator.join(output)
-        #output_data.append(output_str)
-        output_data.append(output)
-        json_str = json.dumps(output) # This outputs the data in json format
+        output_str = separator.join(output)
+        output_data.append(output_str)
+        # output_data.append(output)
+        # json_str = json.dumps(output)
 
-    #all_books_string = '\n'.join(output_data)
-    all_books_string = json.loads(json_str) #json format string
+    all_books_string = '\n'.join(output_data)
+    # all_books_string = json.loads(json_str)
 
     return all_books_string

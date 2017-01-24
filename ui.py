@@ -12,6 +12,7 @@ def display_menu_get_choice():
         4. Add book to wishlist
         5. Search for a book
         6. Edit a title or author
+        7. Delete a book
         q. Quit
     ''')
 
@@ -76,6 +77,10 @@ def ask_what_to_edit():
     elif response == "2":
         response = "title"
     return response
+
+def ask_what_to_delete_by():
+    search_term = input("Please enter a title or author keyword: ")
+    return search_term
 
 
 def get_new_value():
