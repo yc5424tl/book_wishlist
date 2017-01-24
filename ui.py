@@ -78,10 +78,6 @@ def ask_what_to_edit():
         response = "title"
     return response
 
-def ask_what_to_delete_by():
-    search_term = input("Please enter a title or author keyword: ")
-    return search_term
-
 
 def get_new_value():
     new_value = input("What is the new value? ")

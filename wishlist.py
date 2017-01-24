@@ -95,13 +95,11 @@ def edit():
 
     print("Successfully updated.")
 
+
 def delete():
     id = ui.ask_for_book_id()
     for book in datastore.book_list:
         if book.id == id:
-            read = book.read
-            title = book.title
-            author = book.author
             datastore.book_list.remove(book)
             print("Successfully deleted.")
 
