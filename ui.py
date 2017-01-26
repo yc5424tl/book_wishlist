@@ -105,3 +105,13 @@ def get_date_read():
 def get_new_value():
     new_value = input("What is the new value? ")
     return new_value
+
+def get_rating():
+    while True:
+        try:
+            rating = int(input("Enter your rating between 1 and 5: "))
+        except ValueError:
+            continue
+        if rating in range(1, 6):
+            return rating
+            break

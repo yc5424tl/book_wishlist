@@ -47,10 +47,12 @@ def show_read():
 
 
 def book_read():
-    ''' Get choice from user, edit datastore, display success/error'''
+    ''' Get choice from user, edit datastore, display success/error,
+    also the date and the rating is added'''
+    
     book_id = ui.ask_for_book_id()
 
-    if datastore.set_read(book_id, ui.get_date_read()):
+    if datastore.set_read(book_id, ui.get_date_read(), ui.get_rating()):
         ui.message('Successfully updated')
     else:
         ui.message('Book id not found in database')
@@ -97,13 +99,6 @@ def edit():
     ui.message("Successfully updated.")
 
 
-def delete():
-    id = ui.ask_for_book_id()
-    for book in datastore.book_list:
-        if book.id == id:
-            datastore.book_list.remove(book)
-            ui.message("Successfully deleted.")
-
 
 def check_book_in_system(title, author):
     for book in datastore.book_list:
@@ -122,6 +117,12 @@ def quit():
     fileIO.shutdown()
     ui.message('Bye!')
 
+def delete():
+    id = ui.ask_for_book_id()
+    for book in datastore.book_list:
+        if book.id == id:
+            datastore.book_list.remove(book)
+            ui.message("Successfully deleted.")
 
 def main():
 
