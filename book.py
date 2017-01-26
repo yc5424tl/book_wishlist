@@ -1,3 +1,4 @@
+import json
 class Book:
 
     ''' Represents one book in a user's list of books'''
@@ -33,3 +34,17 @@ class Book:
 
     def set_rating(self, rating):
         self.rating = rating
+
+
+''' Possible to make a JSON decoder too, think I'm missing something
+to get that working. '''
+
+def from_json(dictionary):
+    b = Book('', '')
+    b.__dict__ = dictionary
+    return b
+
+''' Encode = turn object into JSON '''
+class BookEncoder(json.JSONEncoder):
+    def default(self, obj):
+        return obj.__dict__
