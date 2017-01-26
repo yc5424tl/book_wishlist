@@ -1,5 +1,7 @@
 import os
 import datastore
+import book
+from book import Book
 
 import json  #store files in json format
 
@@ -15,8 +17,12 @@ def setup():
 
     try:
         with open(BOOKS_FILE_NAME) as f:
-            data = f.read()
-            datastore.make_book_list(data)
+
+            file_data = json.load(f)
+            #File data is a list of dictionaries. Want a list of Book objects
+            datastore.book_list = [ book.from_json(data) for data in file_data ]
+            print(datastore.book_list)
+
     except FileNotFoundError:
         # First time program has run. Assume no books.
         pass
@@ -35,8 +41,6 @@ def setup():
 def shutdown():
     '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
 
-    output_data = datastore.make_output_data()
-
     # Create data directory
     try:
         os.mkdir(DATA_DIR)
@@ -44,9 +48,7 @@ def shutdown():
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as f:
-        f.write(output_data)
-        # json.dumps(output_data) # Saves data in json format
+        json.dump(datastore.book_list, f, cls=book.BookEncoder) # Saves data in json format
 
     with open(COUNTER_FILE_NAME, 'w') as f:
         f.write(str(counter))
-        #json.dumps(counter)
