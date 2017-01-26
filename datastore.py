@@ -137,3 +137,30 @@ def make_output_data():
     # all_books_string = json.loads(json_str)
 
     return all_books_string
+
+
+def get_sorted_books_by_title(**kwargs):
+
+    ''' Return books from data store. With no arguments, returns everything. '''
+
+    global book_list
+
+    if len(kwargs) == 0:
+        return book_list
+
+    if 'title' in kwargs:
+        read_books = [ book for book in book_list if book.read == kwargs['title'] ]
+        read_books
+    return sorted(read_books, key=lambda book_list: book_list[1])
+
+def get_sorted_books_by_author(**kwargs):
+    ''' Return books from data store. With no arguments, returns everything. '''
+    global book_list
+
+    if len(kwargs) == 0:
+        return book_list
+
+        if 'author' in kwargs:
+            read_books = [ book for book in book_list if book.read == kwargs['author'] ]
+            read_books
+    return sorted(read_books, key=lambda book_list: book_list[3])

@@ -27,6 +27,12 @@ def handle_choice(choice):
     elif choice == '7':
         delete()
 
+    elif choice == '8':
+        sort_by_title()
+
+    elif choice == '9':
+        sort_by_author()
+
     elif choice == 'q':
         quit()
 
@@ -49,10 +55,10 @@ def show_read():
 def book_read():
     ''' Get choice from user, edit datastore, display success/error,
     also the date and the rating is added'''
-    
+
     book_id = ui.ask_for_book_id()
 
-    if datastore.set_read(book_id, ui.get_date_read(), ui.get_rating()):
+    if datastore.set_read(book_id, ui.get_date_read(), ui.get_rating()): # Added rating
         ui.message('Successfully updated')
     else:
         ui.message('Book id not found in database')
@@ -123,6 +129,14 @@ def delete():
         if book.id == id:
             datastore.book_list.remove(book)
             ui.message("Successfully deleted.")
+
+def sort_by_title():
+    unread = datastore.get_sorted_books_by_title()
+    ui.show_list(unread)
+
+def sort_by_author():
+    unread = datastore.get_sorted_books_by_author()
+    ui.show_list(unread)
 
 def main():
 

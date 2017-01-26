@@ -14,6 +14,8 @@ def display_menu_get_choice():
         5. Search for a book
         6. Edit a title or author
         7. Delete a book
+        8. Sort books by title
+        9. Sort books by author
         q. Quit
     ''')
 
