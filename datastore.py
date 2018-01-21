@@ -35,6 +35,16 @@ def setup():
         counter = len(book_list)
 
 
+def edit_title(title, new_title):
+    ''' Edits the title of a book within the wishlist. Edits any duplicate books as well '''
+    global book_list
+
+    for book in book_list:
+        current_title = book.title
+        if current_title == title:
+            book.set_title(new_title)
+
+
 def shutdown():
     '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
 

@@ -22,7 +22,7 @@ def handle_choice(choice):
         delete_a_book()
 
     elif choice == '6':
-        edit_book()
+        edit_a_book()
 
     elif choice == 'q':
         quit()
@@ -30,6 +30,12 @@ def handle_choice(choice):
     else:
         ui.message('Please enter a valid selection')
 
+def edit_a_book():
+    ''' Edits a title of a book '''
+    edit_book = ui.get_title()
+    ui.message("New title: ")
+    new_title = input("")
+    datastore.edit_title(edit_book, new_title)
 
 def delete_a_book():
     ''' Deletes a book '''

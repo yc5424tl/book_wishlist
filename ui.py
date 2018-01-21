@@ -11,6 +11,7 @@ def display_menu_get_choice():
         3. Mark a book as read
         4. Add book to wishlist
         5. Delete book from wishlist
+        6. Edit a book title from wishlist
         q. Quit
     ''')
 
@@ -33,7 +34,7 @@ def show_list(books):
 
 
 def get_title():
-    ''' Asks user for book title'''
+    ''' Asks user for book title '''
     book = input("Enter the title of a book ")
     return book
 
