@@ -23,11 +23,20 @@ def handle_choice(choice):
     elif choice == '6':
         edit_a_book()
 
+    elif choice == '7':
+        search_book()
+
     elif choice == 'q':
         quit()
 
     else:
         ui.message('Please enter a valid selection')
+
+def search_book():
+    ''' Searches for a book in the wishlist and read lists '''
+    search_title = ui.get_title()
+    search = datastore.search_books(search_title)
+    ui.message('Book: ' + str(search))
 
 def edit_a_book():
     ''' Edits a title of a book '''

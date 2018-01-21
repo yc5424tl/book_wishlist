@@ -76,6 +76,16 @@ def shutdown():
         f.write(str(counter))
 
 
+def search_books(title):
+    ''' Returns a book from the data store, otherwise returns not found if not within the data store'''
+    global book_list
+
+    for book in book_list:
+        if book.title == title:
+            return book
+
+    return "Not Found"
+
 def get_books(**kwargs):
     ''' Return books from data store. With no arguments, returns everything. '''
 
