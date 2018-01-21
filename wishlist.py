@@ -3,7 +3,6 @@
 import ui, datastore
 from book import Book
 
-
 def handle_choice(choice):
 
     if choice == '1':

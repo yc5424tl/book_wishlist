@@ -1,5 +1,4 @@
 class Book:
-
     ''' Represents one book in a user's list of books'''
 
     NO_ID = -1
