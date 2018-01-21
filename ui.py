@@ -10,6 +10,7 @@ def display_menu_get_choice():
         2. Show books that have been read
         3. Mark a book as read
         4. Add book to wishlist
+        5. Delete book from wishlist
         q. Quit
     ''')
 
@@ -29,6 +30,12 @@ def show_list(books):
         print(book)
 
     print('* {} book(s) *'.format(len(books)))
+
+
+def get_book_to_delete():
+    ''' Asks user for book title to delete'''
+    book = input("Enter the title of a book to delete")
+    return book
 
 
 def ask_for_book_id():

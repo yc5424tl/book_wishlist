@@ -66,6 +66,16 @@ def get_books(**kwargs):
         return read_books
 
 
+def delete_book(name):
+    ''' Removes a book from the book list. Also removes any duplicate books.'''
+
+    global book_list
+
+    for book in book_list:
+        title = book.title
+        if title == name:
+            book_list.remove(book)
+
 
 def add_book(book):
     ''' Add to db, set id value, return Book'''

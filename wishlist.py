@@ -18,11 +18,20 @@ def handle_choice(choice):
     elif choice == '4':
         new_book()
 
+    elif choice == '5':
+        delete_a_book()
+
     elif choice == 'q':
         quit()
 
     else:
         ui.message('Please enter a valid selection')
+
+def delete_a_book():
+    ''' Deletes a book '''
+    del_book = ui.get_book_to_delete()
+    datastore.delete_book(del_book)
+    ui.message('Book deleted: ' + str(del_book))
 
 
 def show_unread():
