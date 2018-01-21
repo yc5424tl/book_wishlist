@@ -1,5 +1,6 @@
 
 import os
+import operator
 from book import Book
 
 DATA_DIR = 'data'
@@ -44,6 +45,8 @@ def edit_title(title, new_title):
         if current_title == title:
             book.set_title(new_title)
 
+    sort_list()
+
 
 def shutdown():
     '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
@@ -86,6 +89,15 @@ def delete_book(name):
         if title == name:
             book_list.remove(book)
 
+    sort_list()
+
+
+def sort_list():
+    ''' Sorts books by title '''
+    global book_list
+
+    book_list.sort(key=operator.attrgetter("title"), reverse=False)
+
 
 def add_book(book):
     ''' Add to db, set id value, return Book'''
@@ -94,7 +106,7 @@ def add_book(book):
 
     book.id = generate_id()
     book_list.append(book)
-
+    sort_list()
 
 def generate_id():
     global counter

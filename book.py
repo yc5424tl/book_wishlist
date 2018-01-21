@@ -19,6 +19,8 @@ class Book:
     def set_id(self, id):
         self.id = id
 
+    def get_title(self):
+        return self.title
 
     def __str__(self):
         read_str = 'no'
