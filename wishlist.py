@@ -60,6 +60,8 @@ def book_read():
     book_id = ui.ask_for_book_id()
     if datastore.set_read(book_id, True):
         ui.message('Successfully updated')
+        rating = ui.get_rating_info()
+        datastore.add_rating(book_id, rating)
     else:
         ui.message('Book id not found in database')
 

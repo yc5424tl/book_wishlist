@@ -48,6 +48,16 @@ def edit_title(title, new_title):
     sort_list()
 
 
+def add_rating(id, rating):
+    ''' Sets the rating of a read book '''
+    global book_list
+
+    for book in book_list:
+        get_id = book.id
+        if get_id == id:
+            book.set_rating(rating)
+
+
 def shutdown():
     '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
 
@@ -108,6 +118,7 @@ def add_book(book):
     book_list.append(book)
     sort_list()
 
+
 def generate_id():
     global counter
     counter += 1
@@ -115,7 +126,8 @@ def generate_id():
 
 
 def set_read(book_id, read):
-    '''Update book with given book_id to read. Return True if book is found in DB and update is made, False otherwise.'''
+    ''' Update book with given book_id to read. Return True if book is found in DB and update is made,
+        False otherwise.'''
 
     global book_list
 
@@ -126,7 +138,6 @@ def set_read(book_id, read):
             return True
 
     return False # return False if book id is not found
-
 
 
 def make_book_list(string_from_file):
@@ -143,7 +154,7 @@ def make_book_list(string_from_file):
 
 
 def make_output_data():
-    ''' create a string containing all data on books, for writing to output file'''
+    ''' create a string containing all data on books, for writing to output file '''
 
     global book_list
 
