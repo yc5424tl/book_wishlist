@@ -11,6 +11,11 @@ class Book:
         self.read = read
         self.id=id
 
+    def set_title(self, title):
+        self.title = title
+
+    def set_author(self, author):
+        self.author = author
 
     def set_id(self, id):
         self.id = id

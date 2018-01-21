@@ -32,9 +32,9 @@ def show_list(books):
     print('* {} book(s) *'.format(len(books)))
 
 
-def get_book_to_delete():
-    ''' Asks user for book title to delete'''
-    book = input("Enter the title of a book to delete")
+def get_title():
+    ''' Asks user for book title'''
+    book = input("Enter the title of a book ")
     return book
 
 
