@@ -1,7 +1,8 @@
 #Main program
 
-import ui, datastore
-from book import Book
+import datastore
+import ui
+
 
 def handle_choice(choice):
 
@@ -48,7 +49,7 @@ def edit_a_book():
 def delete_a_book():
     ''' Deletes a book '''
     del_book = ui.get_title()
-    datastore.delete_book(del_book)
+    datastore.delete_book_by_title(del_book)
     ui.message('Book deleted: ' + str(del_book))
 
 

@@ -19,7 +19,6 @@ def setup():
     try :
         with open(BOOKS_FILE_NAME) as json_file_to_read:
             make_book_list(json.load(json_file_to_read))
-
     except FileNotFoundError:
         pass # First time program has run. Assume no books.
 
@@ -35,7 +34,7 @@ def setup():
 
 
 def edit_title(title, new_title):
-    ''' Edits the title of a book within the wishlist. Edits any duplicate books as well '''
+    """ Edits the title of a book within the wishlist. Edits any duplicate books as well """
     global book_list
 
     for book in book_list:
@@ -47,7 +46,7 @@ def edit_title(title, new_title):
 
 
 def add_rating(id, rating):
-    ''' Sets the rating of a read book '''
+    """ Sets the rating of a read book """
     global book_list
 
     for book in book_list:
@@ -73,17 +72,17 @@ def shutdown():
 
 
 def search_books(title):
-    ''' Returns a book from the data store, otherwise returns not found if not within the data store'''
+    """ Returns a book from the data store, otherwise returns not found if not within the data store"""
     global book_list
 
     for book in book_list:
         if book.title == title:
             return book
 
-    return "Not Found"
+    return "Not Found"   #TODO return 'None' here 
 
 def get_books(**kwargs):
-    ''' Return books from data store. With no arguments, returns everything. '''
+    """ Return books from data store. With no arguments, returns everything. """
 
     global book_list
 
@@ -91,32 +90,31 @@ def get_books(**kwargs):
         return book_list
 
     if 'read' in kwargs:
-        read_books = [ book for book in book_list if book.read == kwargs['read'] ]
-        return read_books
+        return [ book for book in book_list if book.read == kwargs['read'] ]
 
 
-def delete_book(name):
-    ''' Removes a book from the book list. Also removes any duplicate books.'''
+
+def delete_book_by_title(name):
+    """ Removes a book from the book list. Also removes any duplicate books."""
 
     global book_list
 
     for book in book_list:
-        title = book.title
-        if title == name:
-            book_list.remove(book)
+        if book.title == name:
+            book_list.remove(name)
 
     sort_list()
 
 
 def sort_list():
-    ''' Sorts books by title '''
+    """ Sorts books by title """
     global book_list
 
     book_list.sort(key=operator.attrgetter("title"), reverse=False)
 
 
 def add_book(book):
-    ''' Add to db, set id value, return Book'''
+    """ Add to db, set id value, return Book"""
 
     global book_list
 
@@ -131,19 +129,22 @@ def generate_id():
     return counter
 
 
-def set_read(book_id, read):
-    ''' Update book with given book_id to read. Return True if book is found in DB and update is made,
-        False otherwise.'''
+def set_read(book_id):
+    """ Update book with given book_id to read. Return True if book is found in DB and update is made,
+        False otherwise."""
 
     global book_list
 
     for book in book_list:
 
-        if book.id == book_id:
-            book.read = True
-            return True
+        if (book.id == book_id) and (book.read is True):
+            pass # let user know of prior 'read' status
 
-    return False # return False if book id is not found
+        if (book.id == book_id) and (book.read is False):
+            return book.read
+
+
+    return False # if book id is not found
 
 
 def make_book_list(data):
