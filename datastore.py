@@ -36,7 +36,7 @@ def setup():
 def edit_title(title, new_title):
     """ Edits the title of a book within the wishlist. Edits any duplicate books as well """
     global book_list
-
+    #TODO another candidate for moving to the book class
     for book in book_list:
         current_title = book.title
         if current_title == title:
@@ -47,6 +47,7 @@ def edit_title(title, new_title):
 
 def add_rating(id, rating):
     """ Sets the rating of a read book """
+    #todo this could be moved to book class
     global book_list
 
     for book in book_list:
@@ -79,7 +80,7 @@ def search_books(title):
         if book.title == title:
             return book
 
-    return "Not Found"   #TODO return 'None' here 
+    return "Not Found"   #TODO return 'None' here
 
 def get_books(**kwargs):
     """ Return books from data store. With no arguments, returns everything. """
@@ -132,6 +133,7 @@ def generate_id():
 def set_read(book_id):
     """ Update book with given book_id to read. Return True if book is found in DB and update is made,
         False otherwise."""
+    #TODO this seems like it could be moved to the book class
 
     global book_list
 
