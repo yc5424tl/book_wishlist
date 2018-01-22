@@ -1,38 +1,36 @@
-
-import os
+import json
 import operator
+import os
+
 from book import Book
 
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
 COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
 
-separator = '^^^'  # a string probably not in any valid data relating to a book
-
 book_list = []
 counter = 0
 
 def setup():
-    ''' Read book info from file, if file exists. '''
+    """ Read book info from file, if file exists. """
 
     global counter
 
     try :
-        with open(BOOKS_FILE_NAME) as f:
-            data = f.read()
-            make_book_list(data)
+        with open(BOOKS_FILE_NAME) as json_file_to_read:
+            make_book_list(json.load(json_file_to_read))
+
     except FileNotFoundError:
-        # First time program has run. Assume no books.
-        pass
+        pass # First time program has run. Assume no books.
 
 
     try:
         with open(COUNTER_FILE_NAME) as f:
-            try:
-                counter = int(f.read())
-            except:
-                counter = 0
-    except:
+                if counter == 0:
+                    pass
+                else:
+                    counter = int(f.read())
+    except IOError:
         counter = len(book_list)
 
 
@@ -59,9 +57,7 @@ def add_rating(id, rating):
 
 
 def shutdown():
-    '''Save all data to a file - one for books, one for the current counter value, for persistent storage'''
-
-    output_data = make_output_data()
+    """Save all data to a file - one for books, one for the current counter value, for persistent storage"""
 
     # Create data directory
     try:
@@ -69,8 +65,8 @@ def shutdown():
     except FileExistsError:
         pass # Ignore - if directory exists, don't need to do anything. 
 
-    with open(BOOKS_FILE_NAME, 'w') as f:
-        f.write(output_data)
+    with open(BOOKS_FILE_NAME, 'w') as target_output_file:
+        json.dump(make_output_data(), target_output_file)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
         f.write(str(counter))
@@ -150,31 +146,23 @@ def set_read(book_id, read):
     return False # return False if book id is not found
 
 
-def make_book_list(string_from_file):
-    ''' turn the string from the file into a list of Book objects'''
+def make_book_list(data):
+    """ Iterated instantiation of book objects w/ attributes stored as (k, v) = (title, {author, id, read}) in the the dict 'data' """
 
     global book_list
 
-    books_str = string_from_file.split('\n')
-
-    for book_str in books_str:
-        data = book_str.split(separator)
-        book = Book(data[0], data[1], data[2] == 'True', int(data[3]))
-        book_list.append(book)
+    for title in data:
+        book_list.append(Book(title, data.get(title.get('author')), data.get(title).get('id'), data.get(title.get('read'))))
 
 
 def make_output_data():
-    ''' create a string containing all data on books, for writing to output file '''
+    """ Store data in a dict with (k, v) = (title, {author, id, read})  """
 
     global book_list
 
-    output_data = []
+    data_to_output_dict = {}
 
     for book in book_list:
-        output = [ book.title, book.author, str(book.read), str(book.id) ]
-        output_str = separator.join(output)
-        output_data.append(output_str)
+        data_to_output_dict[book.title] = dict(author=book.author, id=book.id, read=book.read)
 
-    all_books_string = '\n'.join(output_data)
-
-    return all_books_string
+    return data_to_output_dict
