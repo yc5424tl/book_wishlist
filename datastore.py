@@ -169,3 +169,14 @@ def make_output_data():
         data_to_output_dict[book.title] = dict(author=book.author, id=book.id, read=book.read)
 
     return data_to_output_dict
+
+
+def query_read_by_title(title):
+    """Takes a book's title as argument, returns true only if 'read is True' for given title."""
+    global book_list
+
+    for book in book_list:
+        if book.title == title:
+            return book.read
+
+    return False

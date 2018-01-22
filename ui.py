@@ -38,6 +38,8 @@ def get_title():
     book = input("Enter the title of a book ")
     return book
 
+# def warn_title_read_previously(book):
+#     print('System Shows ')
 
 def ask_for_book_id():
 
