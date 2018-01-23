@@ -71,7 +71,7 @@ def get_rating_info():
     """ Gets rating for a read book and ensures its within the acceptable range """
     rating = int(input("Enter a rating between 1-5: "))
 
-    while rating < 1 | rating > 6:
+    while rating not in range(1,6):
         rating = int(input("Enter a number betweeen 1 and 5 for the rating: "))
 
     return rating
