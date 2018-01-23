@@ -49,18 +49,15 @@ def get_date_read():
 
     while not sanitized:
         try:
-            input_date = input("Enter the date the book was finished being read in 'YYYY-MM-DD' format, Enter 'none' to clear the date: ")
-            if input_date.lower() == 'none':
-                sanitized = True
-                return None
-            sanitized_date = datetime.datetime.strptime(input_date, '%Y-%m-%d')
+            input_date = input("Enter the date the book was finished being read in 'DD-MM-YYYY' format: ")
+            sanitized_date = datetime.datetime.strptime(input_date, '%d-%m-%Y')
             if sanitized_date > datetime.datetime.now():
                 message('Date entered after current day.')
             else:
                 sanitized = True
-                return sanitized_date.isoformat()
+                return sanitized_date
         except ValueError:
-            message('Incorrect data/format, please use YYYY-MM-DD')
+            message('Incorrect data/format, please use DD-MM-YYYY')
             # get_date_read()
 
     if not sanitized:

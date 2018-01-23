@@ -16,6 +16,7 @@ def set_date_read(target_title, date_read):
             return True
     return False
 
+
 def edit_title(title, new_title):
     """ Edits the title of a book within the wishlist. Edits any duplicate books as well. """
 

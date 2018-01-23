@@ -36,18 +36,14 @@ def search_book():
     ui.message('Book: ' + str(search))
 
 
-def edit_read_date_by_title(updated_read_to_true=False, updated_title=None):
+def edit_read_date_by_title():
 
-    target_title = updated_title
-
-    if not updated_read_to_true:
-        target_title = ui.get_title()
-
+    target_title = ui.get_title()
     if datastore.check_for_book_existence_in_system(target_title):
         if datastore.get_read_by_title(target_title):
                 date_read = ui.get_date_read()
                 datastore.set_date_read(target_title, date_read)
-                datastore.set_read(target_title, set_to=False)
+
 
 
 def edit_book_title():
@@ -89,8 +85,6 @@ def update_book_read():
         ui.message('Successfully updated')
         rating = ui.get_rating_info()    #todo move rating to own method
         datastore.set_rating(book_title, rating)
-        if mark_as:
-            edit_read_date_by_title(updated_read_to_true=True, updated_title=book_title)
     else:
         ui.message('Book id not found in database')
 
