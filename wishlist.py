@@ -1,5 +1,6 @@
 #Main program
 
+import book
 import datastore
 import file_io
 import ui
@@ -7,32 +8,25 @@ import ui
 
 def handle_choice(choice):
 
-    if choice == '1':
-        show_unread()
+    choice_dict = {
+        '1': show_unread,
+        '2': show_read,
+        '3': update_book_read,
+        '4': add_new_book,
+        '5': delete_a_book,
+        '6': edit_book_title,
+        '7': search_book,
+        'q': quit_program,
+    }
 
-    elif choice == '2':
-        show_read()
+    function_call = choice_dict.get(choice)
 
-    elif choice == '3':
-        update_book_read()
-
-    elif choice == '4':
-        add_new_book()
-
-    elif choice == '5':
-        delete_a_book()
-
-    elif choice == '6':
-        edit_a_book()
-
-    elif choice == '7':
-        search_book()
-
-    elif choice == 'q':
-        quit_program()
-
+    if function_call is None:
+        ui.message('Invalid Selection, Try Again.')
     else:
-        ui.message('Please enter a valid selection')
+        return function_call()
+    # Thanks to https://www.pydanny.com/why-doesnt-python-have-switch-case.html
+
 
 def search_book():
     """ Searches for a book in the wishlist and read lists """
@@ -40,20 +34,24 @@ def search_book():
     search = datastore.search_books(search_title)
     ui.message('Book: ' + str(search))
 
-def edit_a_book():
+
+def edit_book_title():
     """ Edits a title of a book """
     edit_book = ui.get_title()
     ui.message("New title: ")
     new_title = input("")
     datastore.edit_title(edit_book, new_title)
 
+
 def delete_a_book():
     """ Deletes a book """
     del_book = ui.get_title()
+
     if datastore.delete_book_by_title(del_book):
         ui.message('Book deleted: ' + str(del_book))
     else:
         ui.message('No Match Found for ' + str(del_book))
+
 
 def show_unread():
     """Fetch and show all unread books"""
@@ -75,42 +73,57 @@ def update_book_read():
     if datastore.set_read(book_id, mark_as):
         ui.message('Successfully updated')
         rating = ui.get_rating_info()    #todo move rating to own method
-        datastore.add_rating(book_id, rating)
+        datastore.edit_rating(book_id, rating)
     else:
         ui.message('Book id not found in database')
 
 
+def edit_book_rating():
+    target_book_title = ui.get_title()
+
+    if not datastore.check_for_book_existence_in_system(target_book_title):
+        ui.message('No Match Found for Title: {}'.format(target_book_title))
+
+    else:
+        target_book_rating = ui.get_rating_info()
+        datastore.edit_rating(target_book_title, target_book_rating)
+
+
 def add_new_book():
     """Get info from user, add new book"""
-    new_book = ui.get_new_book_info()
+    title_and_author = ui.get_new_book_info()
+    new_book = book.Book(title_and_author[0], title_and_author[1])
     datastore.add_book(new_book)
-    ui.message('Book added: ' + str(new_book))
+    ui.message('Book added: ' + new_book.get_title())
     warn_if_previously_read(new_book.title)
 
 
 def quit_program():
     """Perform shutdown tasks"""
     prepared_data = datastore.make_output_data()
-    file_io.update_data_sources(prepared_data)
-
+    file_io.update_data_sources(prepared_data, datastore.counter)
     ui.message('Bye!')
+
 
 def warn_if_previously_read(title):
     if datastore.query_read_by_title(title):
         ui.warn_title_read_previously(title)
 
+
 def start():
 
-
     list_data = file_io.build_list_data()
+
     if list_data is not None:
-        datastore.make_book_list(list_data)
+        datastore.import_data(list_data)
 
     counter_data = file_io.build_counter_data()
+
     if counter_data is None:
         datastore.counter = len(datastore.book_list)
     else:
         datastore.counter = counter_data
+
 
 def main():
 
