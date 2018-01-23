@@ -7,7 +7,7 @@ def display_menu_get_choice():
     print('''
         1. Show unread books (wishlist)
         2. Show books that have been read
-        3. Mark a book as read
+        3. Mark a book as un/read
         4. Add book to wishlist
         5. Delete book from wishlist
         6. Edit a book title from wishlist
@@ -34,22 +34,21 @@ def show_list(books):
 
 
 def get_title():
-    ''' Asks user for book title '''
+    """ Asks user for book title """
     book = input("Enter the title of a book ")
     return book
 
-# def warn_title_read_previously(book):
-#     print('System Shows ')
+def warn_title_read_previously(book):
+    print('System Shows the latest entry, {}, shares a title with a book that has already been marked as read. No changes to either have been made.'.format(book.title))
 
 def ask_for_book_id():
-
-    ''' Ask user for book id, validate to ensure it is a positive integer '''
+    """ Ask user for book id, validate to ensure it is a positive integer """
 
     while True:
         try:
-            id = int(input('Enter book id:'))
-            if id >= 0:
-                return id
+            query_id = int(input('Enter book id:'))
+            if query_id >= 0:
+                return query_id
             else:
                 print('Please enter a positive number ')
         except ValueError:
@@ -78,3 +77,15 @@ def get_rating_info():
         rating = int(input("Enter a number betweeen 1 and 5 for the rating: "))
 
     return rating
+
+def get_read_update_type():
+
+    update_type = None
+
+    while update_type != 1 or 2:
+        update_type = int(input('Enter 1 to mark as read. Enter 2 to mark as not read.'))
+
+    if update_type == 1:
+        return True
+    elif update_type == 2:
+        return False

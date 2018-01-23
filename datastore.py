@@ -130,8 +130,8 @@ def generate_id():
     return counter
 
 
-def set_read(book_id):
-    """ Update book with given book_id to read. Return True if book is found in DB and update is made,
+def set_read(book_id, set_to=True):
+    """ Update book with given book_id to read (default). Return True if book is found in DB and update is made,
         False otherwise."""
     #TODO this seems like it could be moved to the book class
 
@@ -139,12 +139,9 @@ def set_read(book_id):
 
     for book in book_list:
 
-        if (book.id == book_id) and (book.read is True):
-            pass # let user know of prior 'read' status
-
-        if (book.id == book_id) and (book.read is False):
+        if (book.id == book_id) and (book.read is not set_to):
+            book.read = set_to
             return book.read
-
 
     return False # if book id is not found
 
