@@ -57,7 +57,7 @@ def ask_for_book_id():
 
 def get_new_book_info():
 
-    ''' Get title and author of new book from user '''
+    """ Get title and author of new book from user """
 
     title = input('Enter title: ')
     author = input('Enter author: ')
@@ -65,12 +65,12 @@ def get_new_book_info():
 
 
 def message(msg):
-    ''' Display a message to the user '''
+    """ Display a message to the user """
     print(msg)
 
 
 def get_rating_info():
-    ''' Gets rating for a read book and ensures its within the acceptable range '''
+    """ Gets rating for a read book and ensures its within the acceptable range """
     rating = int(input("Enter a rating between 1-5: "))
 
     while rating < 1 | rating > 6:
@@ -80,12 +80,14 @@ def get_rating_info():
 
 def get_read_update_type():
 
-    update_type = None
+    while True:
+        update_type = input('Enter 1 to mark as read. Enter 2 to mark as not read.')
 
-    while update_type != 1 or 2:
-        update_type = int(input('Enter 1 to mark as read. Enter 2 to mark as not read.'))
+        if int(update_type) == 1:
+            update_type = True
+            break
+        elif int(update_type) == 2:
+            update_type = False
+            break
 
-    if update_type == 1:
-        return True
-    elif update_type == 2:
-        return False
+    return update_type

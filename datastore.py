@@ -1,41 +1,13 @@
-import json
 import operator
-import os
 
 from book import Book
-
-DATA_DIR = 'data'
-BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
-COUNTER_FILE_NAME = os.path.join(DATA_DIR, 'counter.txt')
 
 book_list = []
 counter = 0
 
-def setup():
-    """ Read book info from file, if file exists. """
-
-    global counter
-
-    try :
-        with open(BOOKS_FILE_NAME) as json_file_to_read:
-            make_book_list(json.load(json_file_to_read))
-    except FileNotFoundError:
-        pass # First time program has run. Assume no books.
-
-
-    try:
-        with open(COUNTER_FILE_NAME) as f:
-                if counter == 0:
-                    pass
-                else:
-                    counter = int(f.read())
-    except IOError:
-        counter = len(book_list)
-
-
 def edit_title(title, new_title):
     """ Edits the title of a book within the wishlist. Edits any duplicate books as well """
-    global book_list
+
     #TODO another candidate for moving to the book class
     for book in book_list:
         current_title = book.title
@@ -56,20 +28,6 @@ def add_rating(id, rating):
             book.set_rating(rating)
 
 
-def shutdown():
-    """Save all data to a file - one for books, one for the current counter value, for persistent storage"""
-
-    # Create data directory
-    try:
-        os.mkdir(DATA_DIR)
-    except FileExistsError:
-        pass # Ignore - if directory exists, don't need to do anything. 
-
-    with open(BOOKS_FILE_NAME, 'w') as target_output_file:
-        json.dump(make_output_data(), target_output_file)
-
-    with open(COUNTER_FILE_NAME, 'w') as f:
-        f.write(str(counter))
 
 
 def search_books(title):
@@ -103,7 +61,7 @@ def delete_book_by_title(name):
 
     for book in book_list:
         if book.title == name:
-            book_list.remove(name)
+            book_list.remove(book)
             title_deleted = True
 
     sort_list()
