@@ -49,9 +49,10 @@ def edit_a_book():
 def delete_a_book():
     """ Deletes a book """
     del_book = ui.get_title()
-    datastore.delete_book_by_title(del_book)
-    ui.message('Book deleted: ' + str(del_book))
-
+    if datastore.delete_book_by_title(del_book):
+        ui.message('Book deleted: ' + str(del_book))
+    else:
+        ui.message('No Match Found for ' + str(del_book))
 
 def show_unread():
     """Fetch and show all unread books"""

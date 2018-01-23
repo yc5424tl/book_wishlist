@@ -99,13 +99,15 @@ def delete_book_by_title(name):
     """ Removes a book from the book list. Also removes any duplicate books."""
 
     global book_list
+    title_deleted = False
 
     for book in book_list:
         if book.title == name:
             book_list.remove(name)
+            title_deleted = True
 
     sort_list()
-
+    return title_deleted
 
 def sort_list():
     """ Sorts books by title """
