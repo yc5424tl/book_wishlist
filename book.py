@@ -1,11 +1,14 @@
+""" coding=utf-8 """
+
+
 class Book:
-    ''' Represents one book in a user's list of books'''
+    """ Represents one book in a user's list of books"""
 
     NO_ID = -1
     NO_RATING = -1
 
     def __init__(self, title, author, id_num=NO_ID, read=False, rating=NO_RATING):
-        '''Default book is unread, and has no ID'''
+        """Default book is unread, and has no ID or rating. """
         self.title = title
         self.author = author
         self.read = read
@@ -18,8 +21,8 @@ class Book:
     def set_author(self, author):
         self.author = author
 
-    def set_id(self, id):
-        self.id = id
+    def set_id(self, id_num):
+        self.id = id_num
 
     def get_title(self):
         return self.title
@@ -41,7 +44,8 @@ class Book:
             rating_str = "N/A"
 
         template = 'id: {} Title: {} Author: {} Read: {} Rating: {}'
+
         return template.format(id_str, self.title, self.author, read_str, rating_str)
 
     def __eq__(self, other):
-        return self.title == other.title and self.author == other.author and self.read == other.read and self.id==other.id
+        return self.title == other.title and self.author == other.author and self.read == other.read and self.id == other.id

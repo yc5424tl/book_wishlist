@@ -1,9 +1,12 @@
+""" coding=utf-8 """
+
 import operator
 
 from book import Book
 
 book_list = []
 counter = 0
+
 
 def edit_title(title, new_title):
     """ Edits the title of a book within the wishlist. Edits any duplicate books as well. """
@@ -13,6 +16,7 @@ def edit_title(title, new_title):
             book.set_title(new_title)
 
     sort_list()
+
 
 def edit_rating(target_title, rating):
     """ Sets the rating for any book in the wishlist whose title matches target_title. """
@@ -31,6 +35,7 @@ def search_books(title):
 
     return "Not Found"
 
+
 def get_books(**kwargs):
     """ Return books from data store. With no arguments, returns everything. """
 
@@ -38,7 +43,7 @@ def get_books(**kwargs):
         return book_list
 
     if 'read' in kwargs:
-        return [ book for book in book_list if book.read == kwargs['read'] ]
+        return [book for book in book_list if book.read == kwargs['read']]
 
 
 def delete_book_by_title(name):
@@ -54,6 +59,7 @@ def delete_book_by_title(name):
     sort_list()
     return title_deleted
 
+
 def sort_list():
     """ Sorts books by title """
 
@@ -61,7 +67,7 @@ def sort_list():
 
 
 def add_book(book):
-    """ Add to db, set id value, return Book"""
+    """ Adds a book object to the wishlist. """
 
     book.id = generate_id()
     book_list.append(book)
@@ -69,16 +75,15 @@ def add_book(book):
 
 
 def generate_id():
+    """ Increments the counter used to produce unique book IDs. """
+
     global counter
     counter += 1
     return counter
 
 
 def set_read(book_id, set_to=True):
-    """ Update book with given book_id to read (default). Return True if book is found in DB and update is made,
-        False otherwise."""
-
-    global book_list
+    """ Update Book w/ book_id to read=True(default), return True. Returns False if book not found, or 'read' already desired Bool."""
 
     for book in book_list:
 
@@ -86,7 +91,7 @@ def set_read(book_id, set_to=True):
             book.read = set_to
             return book.read
 
-    return False # if book id is not found
+    return False  # if book id is not found
 
 
 def import_data(data_dict):
@@ -126,6 +131,7 @@ def query_read_by_title(title):
             return book.read
 
     return None
+
 
 def check_for_book_existence_in_system(title_to_query):
     """ Returns Boolean for if a title is stored book_list. """
