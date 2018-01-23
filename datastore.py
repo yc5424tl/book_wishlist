@@ -8,6 +8,14 @@ book_list = []
 counter = 0
 
 
+def set_date_read(target_title, date_read):
+
+    for book in book_list:
+        if book.title == target_title:
+            book.date_read = date_read
+            return True
+    return False
+
 def edit_title(title, new_title):
     """ Edits the title of a book within the wishlist. Edits any duplicate books as well. """
 
@@ -18,7 +26,7 @@ def edit_title(title, new_title):
     sort_list()
 
 
-def edit_rating(target_title, rating):
+def set_rating(target_title, rating):
     """ Sets the rating for any book in the wishlist whose title matches target_title. """
 
     for book in book_list:
@@ -82,13 +90,15 @@ def generate_id():
     return counter
 
 
-def set_read(book_id, set_to=True):
-    """ Update Book w/ book_id to read=True(default), return True. Returns False if book not found, or 'read' already desired Bool."""
+def set_read(book_title, set_to=True):
+    """ Update Book w/ book_title to read=True(default), return True. Returns False if book not found, or 'read' already desired Bool."""
 
     for book in book_list:
 
-        if (book.id == book_id) and (book.read is not set_to):
+        if (book.title == book_title) and (book.read is not set_to):
             book.read = set_to
+            if not set_to:
+                book.date_read = None
             return book.read
 
     return False  # if book id is not found
@@ -105,7 +115,8 @@ def import_data(data_dict):
                  data_dict.get(title).get('author'),
                  data_dict.get(title).get('id'),
                  data_dict.get(title).get('read'),
-                 data_dict.get(title).get('rating')))
+                 data_dict.get(title).get('rating'),
+                 data_dict.get(title).get('date_read')))
 
 
 def make_output_data():
@@ -116,15 +127,13 @@ def make_output_data():
     data_to_output_dict = {}
 
     for book in book_list:
-        data_to_output_dict[book.title] = dict(author=book.author, id=book.id, read=book.read, rating=book.rating)
+        data_to_output_dict[book.title] = dict(author=book.author, id=book.id, read=book.read, rating=book.rating, date_read=book.date_read)
 
     return data_to_output_dict
 
 
-def query_read_by_title(title):
+def get_read_by_title(title):
     """ Takes a book's title as argument, returns true only if 'read is True' for given title. """
-
-    global book_list
 
     for book in book_list:
         if book.title == title:
