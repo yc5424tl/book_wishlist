@@ -17,14 +17,13 @@ def edit_title(title, new_title):
     sort_list()
 
 
-def add_rating(id, rating):
+def edit_rating(target_title, rating):
     """ Sets the rating of a read book """
     #todo this could be moved to book class
     global book_list
 
     for book in book_list:
-        get_id = book.id
-        if get_id == id:
+        if book.title == target_title:
             book.set_rating(rating)
 
 
@@ -136,4 +135,10 @@ def query_read_by_title(title):
         if book.title == title:
             return book.read
 
+    return False
+
+def check_for_book_existence_in_system(title_to_query):
+    for book in book_list:
+        if book.title == title_to_query:
+            return True
     return False

@@ -38,7 +38,7 @@ def build_counter_data():
         return None
 
 
-def update_data_sources(data_to_write):
+def update_data_sources(book_data, counter_data):
     """Save all data to a file - one for books, one for the current counter value, for persistent storage"""
 
     # Create data directory
@@ -48,7 +48,7 @@ def update_data_sources(data_to_write):
         pass # Ignore - if directory exists, don't need to do anything.
 
     with open(BOOKS_FILE_NAME, 'w') as target_output_file:
-        json.dump(data_to_write, target_output_file)
+        json.dump(book_data, target_output_file)
 
     with open(COUNTER_FILE_NAME, 'w') as f:
-        f.write(str(counter))
+        f.write(str(counter_data))

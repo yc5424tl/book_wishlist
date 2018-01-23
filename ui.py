@@ -35,8 +35,8 @@ def show_list(books):
 
 def get_title():
     """ Asks user for book title """
-    book = input("Enter the title of a book ")
-    return book
+    book_title = input("Enter the Book Title ")
+    return book_title
 
 def warn_title_read_previously(book):
     print('System Shows the latest entry, {}, shares a title with a book that has already been marked as read. No changes to either have been made.'.format(book.title))
