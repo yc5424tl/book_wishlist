@@ -1,5 +1,6 @@
 #Main program
 
+import book
 import datastore
 import file_io
 import ui
@@ -24,12 +25,15 @@ def handle_choice(choice):
         ui.message('Invalid Selection, Try Again.')
     else:
         return function_call()
+    # Thanks to https://www.pydanny.com/why-doesnt-python-have-switch-case.html
+
 
 def search_book():
     """ Searches for a book in the wishlist and read lists """
     search_title = ui.get_title()
     search = datastore.search_books(search_title)
     ui.message('Book: ' + str(search))
+
 
 def edit_book_title():
     """ Edits a title of a book """
@@ -38,13 +42,16 @@ def edit_book_title():
     new_title = input("")
     datastore.edit_title(edit_book, new_title)
 
+
 def delete_a_book():
     """ Deletes a book """
     del_book = ui.get_title()
+
     if datastore.delete_book_by_title(del_book):
         ui.message('Book deleted: ' + str(del_book))
     else:
         ui.message('No Match Found for ' + str(del_book))
+
 
 def show_unread():
     """Fetch and show all unread books"""
@@ -80,11 +87,14 @@ def edit_book_rating():
     else:
         target_book_rating = ui.get_rating_info()
         datastore.edit_rating(target_book_title, target_book_rating)
+
+
 def add_new_book():
     """Get info from user, add new book"""
-    new_book = ui.get_new_book_info()
+    title_and_author = ui.get_new_book_info()
+    new_book = book.Book(title_and_author[0], title_and_author[1])
     datastore.add_book(new_book)
-    ui.message('Book added: ' + str(new_book))
+    ui.message('Book added: ' + new_book.get_title())
     warn_if_previously_read(new_book.title)
 
 
@@ -94,16 +104,18 @@ def quit_program():
     file_io.update_data_sources(prepared_data, datastore.counter)
     ui.message('Bye!')
 
+
 def warn_if_previously_read(title):
     if datastore.query_read_by_title(title):
         ui.warn_title_read_previously(title)
+
 
 def start():
 
     list_data = file_io.build_list_data()
 
     if list_data is not None:
-        datastore.make_book_list(list_data)
+        datastore.import_data(list_data)
 
     counter_data = file_io.build_counter_data()
 
@@ -111,6 +123,7 @@ def start():
         datastore.counter = len(datastore.book_list)
     else:
         datastore.counter = counter_data
+
 
 def main():
 

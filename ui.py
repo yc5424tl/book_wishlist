@@ -1,5 +1,3 @@
-from book import Book
-
 def display_menu_get_choice():
 
     '''Display choices for user, return users' selection'''
@@ -56,12 +54,12 @@ def ask_for_book_id():
 
 
 def get_new_book_info():
-
-    """ Get title and author of new book from user """
+    """ Returns user input as tuple (title_input, author_input). """
 
     title = input('Enter title: ')
     author = input('Enter author: ')
-    return Book(title, author)
+    book_tuple = (title, author)
+    return book_tuple
 
 
 def message(msg):
