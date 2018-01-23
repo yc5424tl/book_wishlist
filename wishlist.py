@@ -1,6 +1,7 @@
 #Main program
 
 import datastore
+import file_io
 import ui
 
 
@@ -89,16 +90,31 @@ def add_new_book():
 
 def quit_program():
     """Perform shutdown tasks"""
-    datastore.shutdown()
+    prepared_data = datastore.make_output_data()
+    file_io.update_data_sources(prepared_data)
+
     ui.message('Bye!')
 
 def warn_if_previously_read(title):
     if datastore.query_read_by_title(title):
         ui.warn_title_read_previously(title)
 
+def start():
+
+
+    list_data = file_io.build_list_data()
+    if list_data is not None:
+        datastore.make_book_list(list_data)
+
+    counter_data = file_io.build_counter_data()
+    if counter_data is None:
+        datastore.counter = len(datastore.book_list)
+    else:
+        datastore.counter = counter_data
+
 def main():
 
-    datastore.setup()
+    start()
 
     quit_command = 'q'
     user_choice = None
