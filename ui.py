@@ -69,10 +69,10 @@ def message(msg):
 
 def get_rating_info():
     """ Gets rating for a read book and ensures its within the acceptable range """
-    rating = int(input("Enter a rating between 1-5: "))
 
-    while rating not in range(1,6):
-        rating = int(input("Enter a number betweeen 1 and 5 for the rating: "))
+    rating =input("Enter a rating between 1-5: ")
+    while rating not in str(range(1,6)):
+        rating = input("Enter a number between 1 and 5 for the rating: ")
 
     return rating
 
@@ -81,10 +81,10 @@ def get_read_update_type():
     while True:
         update_type = input('Enter 1 to mark as read. Enter 2 to mark as not read.')
 
-        if int(update_type) == 1:
+        if update_type == '1':
             update_type = True
             break
-        elif int(update_type) == 2:
+        elif update_type == '2':
             update_type = False
             break
 
