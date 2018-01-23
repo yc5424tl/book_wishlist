@@ -19,7 +19,7 @@ def display_menu_get_choice():
 
 
 def show_list(books):
-    ''' Format and display a list of book objects'''
+    """ Format and display a list of book objects. """
 
     if len(books) == 0:
         print ('* No books *')

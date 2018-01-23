@@ -21,18 +21,9 @@ def build_list_data():
 def build_counter_data():
     """ Retrieve Counter Data from File """
 
-    count = 0
-
     try:
         with open(COUNTER_FILE_NAME) as f:
-
-                if count == 0:
-                    pass
-
-                else:
-                    count = int(f.read())
-
-                return count
+            return int(f.read())
 
     except IOError:
         return None
