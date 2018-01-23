@@ -2,6 +2,7 @@
 
 import json
 import os
+from json import JSONDecodeError
 
 DATA_DIR = 'data'
 BOOKS_FILE_NAME = os.path.join(DATA_DIR, 'wishlist.txt')
@@ -16,6 +17,8 @@ def build_list_data():
             return json.load(json_file_to_read)
     except FileNotFoundError:
         return None  # First time program has run. Assume no books.
+    except JSONDecodeError:
+        return {}
 
 
 def build_counter_data():
