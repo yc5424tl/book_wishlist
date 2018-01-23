@@ -1,4 +1,5 @@
 """ coding=utf-8 """
+import datetime
 
 
 def display_menu_get_choice():
@@ -12,6 +13,7 @@ def display_menu_get_choice():
         5. Delete book from wishlist
         6. Edit a book title from wishlist
         7. Search for a book
+        8. Edit a book's date read
         q. Quit
     ''')
 
@@ -38,6 +40,31 @@ def get_title():
 
     book_title = input("Enter the Book Title ")
     return book_title
+
+
+def get_date_read():
+    """ Takes user input for a date, returns date if valid. """
+
+    sanitized = False
+
+    while not sanitized:
+        try:
+            input_date = input("Enter the date the book was finished being read in 'YYYY-MM-DD' format, Enter 'none' to clear the date: ")
+            if input_date.lower() == 'none':
+                sanitized = True
+                return None
+            sanitized_date = datetime.datetime.strptime(input_date, '%Y-%m-%d')
+            if sanitized_date > datetime.datetime.now():
+                message('Date entered after current day.')
+            else:
+                sanitized = True
+                return sanitized_date.isoformat()
+        except ValueError:
+            message('Incorrect data/format, please use YYYY-MM-DD')
+            # get_date_read()
+
+    if not sanitized:
+        get_date_read()
 
 
 def warn_title_read_previously(book):
@@ -83,7 +110,7 @@ def get_rating_info():
 
     rating = input("Enter a rating between 1-5: ")
 
-    while rating not in str(range(1, 6)):
+    while rating not in ['1', '2', '3', '4', '5']:
         rating = input("Enter a number between 1 and 5 for the rating: ")
 
     return rating

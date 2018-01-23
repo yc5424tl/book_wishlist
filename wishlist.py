@@ -16,6 +16,7 @@ def handle_choice(choice):
         '5': delete_a_book,
         '6': edit_book_title,
         '7': search_book,
+        '8': edit_read_date_by_title,
         'q': quit_program,
     }
 
@@ -33,6 +34,20 @@ def search_book():
     search_title = ui.get_title()
     search = datastore.search_books(search_title)
     ui.message('Book: ' + str(search))
+
+
+def edit_read_date_by_title(updated_read_to_true=False, updated_title=None):
+
+    target_title = updated_title
+
+    if not updated_read_to_true:
+        target_title = ui.get_title()
+
+    if datastore.check_for_book_existence_in_system(target_title):
+        if datastore.get_read_by_title(target_title):
+                date_read = ui.get_date_read()
+                datastore.set_date_read(target_title, date_read)
+                datastore.set_read(target_title, set_to=False)
 
 
 def edit_book_title():
@@ -68,12 +83,14 @@ def show_read():
 def update_book_read():
     """ Get choice from user, edit datastore, display success/error"""
 
-    book_id = ui.ask_for_book_id()
+    book_title = ui.get_title()
     mark_as = ui.get_read_update_type()
-    if datastore.set_read(book_id, mark_as):
+    if datastore.set_read(book_title, mark_as):
         ui.message('Successfully updated')
         rating = ui.get_rating_info()    #todo move rating to own method
-        datastore.edit_rating(book_id, rating)
+        datastore.set_rating(book_title, rating)
+        if mark_as:
+            edit_read_date_by_title(updated_read_to_true=True, updated_title=book_title)
     else:
         ui.message('Book id not found in database')
 
@@ -86,7 +103,7 @@ def edit_book_rating():
 
     else:
         target_book_rating = ui.get_rating_info()
-        datastore.edit_rating(target_book_title, target_book_rating)
+        datastore.set_rating(target_book_title, target_book_rating)
 
 
 def add_new_book():
@@ -106,7 +123,7 @@ def quit_program():
 
 
 def warn_if_previously_read(title):
-    if datastore.query_read_by_title(title):
+    if datastore.get_read_by_title(title):
         ui.warn_title_read_previously(title)
 
 
